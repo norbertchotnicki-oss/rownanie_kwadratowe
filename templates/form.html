@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Równanie kwadratowe</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-half">
+
+                <div class="box">
+                    <h1 class="title has-text-centered">
+                        Rozwiązywanie równania kwadratowego
+                    </h1>
+
+                    <p class="subtitle has-text-centered">
+                        Wpisz współczynniki równania:
+                        <strong>ax² + bx + c = 0</strong>
+                    </p>
+
+                    {% if errors %}
+                        <div class="notification is-danger">
+                            {% for error in errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <form method="POST">
+                        <div class="field">
+                            <label class="label">Współczynnik a</label>
+                            <div class="control">
+                                <input class="input"
+                                       type="text"
+                                       name="a"
+                                       value="{{ values.a }}"
+                                       placeholder="Np. 1">
+                            </div>
+                            <p class="help">Liczba stojąca przy x². Nie może być równa 0.</p>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Współczynnik b</label>
+                            <div class="control">
+                                <input class="input"
+                                       type="text"
+                                       name="b"
+                                       value="{{ values.b }}"
+                                       placeholder="Np. -5">
+                            </div>
+                            <p class="help">Liczba stojąca przy x.</p>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Współczynnik c</label>
+                            <div class="control">
+                                <input class="input"
+                                       type="text"
+                                       name="c"
+                                       value="{{ values.c }}"
+                                       placeholder="Np. 6">
+                            </div>
+                            <p class="help">Wyraz wolny równania.</p>
+                        </div>
+
+                        <div class="field mt-5">
+                            <div class="control">
+                                <button class="button is-primary is-fullwidth" type="submit">
+                                    Sprawdź równanie
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+					{% if result %}
+<div class="notification is-success mt-5">
+
+    <h2 class="title is-4">Rozwiązanie krok po kroku</h2>
+
+    <p>Rozwiązujemy równanie:
+        <strong>{{ result.a }}x² + {{ result.b }}x + {{ result.c }} = 0</strong>
+    </p>
+
+    <hr>
+
+    <h3 class="subtitle">Obliczanie delty</h3>
+
+    <p>Δ = b² − 4ac</p>
+    <p>{{ result.delta_step1 }}</p>
+    <p>{{ result.delta_step2 }}</p>
+    <p><strong>{{ result.delta_step3 }}</strong></p>
+
+    <hr>
+
+    <p><strong>{{ result.message }}</strong></p>
+
+    {% if result.delta > 0 %}
+        <h3 class="subtitle">Obliczanie x1</h3>
+        <p>{{ result.x1_step1 }}</p>
+        <p>{{ result.x1_step2 }}</p>
+        <p><strong>{{ result.x1_step3 }}</strong></p>
+
+        <h3 class="subtitle">Obliczanie x2</h3>
+        <p>{{ result.x2_step1 }}</p>
+        <p>{{ result.x2_step2 }}</p>
+        <p><strong>{{ result.x2_step3 }}</strong></p>
+
+    {% elif result.delta == 0 %}
+        <h3 class="subtitle">Obliczanie x0</h3>
+        <p>{{ result.x0_step1 }}</p>
+        <p>{{ result.x0_step2 }}</p>
+        <p><strong>{{ result.x0_step3 }}</strong></p>
+    {% endif %}
+<div class="mt-4">
+    <a href="/" class="button is-link is-light">
+        Wyczyść formularz / Nowe równanie
+    </a>
+</div>
+</div>
+{% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
